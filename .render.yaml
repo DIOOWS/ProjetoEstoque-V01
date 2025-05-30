@@ -1,7 +1,9 @@
 services:
   - type: web
-    name: flask-produtos
+    name: xodostore
     env: python
-    plan: free
-    buildCommand: ""
-    startCommand: gunicorn app:app
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: FLASK_ENV
+        value: production
