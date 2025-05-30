@@ -5,12 +5,12 @@ import os
 
 app = Flask(__name__)
 
-DATABASE = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'produtos.db')
+conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'produtos.db'))
 
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
+        db = g._database = sqlite3.connect(conn)
         db.row_factory = sqlite3.Row
     return db
 
