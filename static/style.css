@@ -22,6 +22,27 @@ h1 {
   text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
 
+/* BOTÃO DE LOGOUT */
+.logout-btn {
+  background-color: #ff7043;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+.logout-btn:hover {
+  background-color: #e64a19;
+  box-shadow: 0 6px 16px rgba(230, 74, 25, 0.6);
+}
+
 form {
   width: 100%;
   max-width: 700px;
@@ -98,10 +119,11 @@ table {
 }
 
 th, td {
-  padding: 14px 20px;
+  padding: 10px 14px;
   text-align: left;
   font-size: 15px;
   color: #34495e;
+  line-height: 1.2;
 }
 
 th {
@@ -146,4 +168,45 @@ button.btnDelete {
 button.btnDelete:hover {
   background: #b71c1c;
   box-shadow: 0 5px 15px rgba(183, 28, 28, 0.7);
+}
+
+/* RESPONSIVIDADE MOBILE */
+@media (max-width: 768px) {
+  body {
+    margin: 10px;
+  }
+
+  .logout-btn {
+    position: static;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  form {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 20px;
+    gap: 10px;
+  }
+
+  form input, form button, #busca {
+    font-size: 14px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+
+  th, td {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+
+  table {
+    font-size: 13px;
+  }
 }
