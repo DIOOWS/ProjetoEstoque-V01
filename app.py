@@ -21,7 +21,7 @@ HEADERS = {
 
 # Simples usuário fixo só pra exemplo (em produção você faria autenticação real)
 USUARIOS = {
-    'admin': '123456'
+    'admin': 'xodoxodo10'
 }
 
 # Rota da página de login
