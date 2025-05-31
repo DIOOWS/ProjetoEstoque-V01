@@ -5,14 +5,13 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 20px;
+  margin: 30px;
   background: linear-gradient(135deg, #e0f7fa, #ffffff);
   color: #2c3e50;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 10px; /* padding lateral pra celular */
 }
 
 h1 {
@@ -39,14 +38,11 @@ form {
 
 form input {
   flex: 1 1 150px;
-  min-width: 120px;
   padding: 12px 15px;
   font-size: 16px;
   border: 2px solid #b2dfdb;
   border-radius: 8px;
   transition: border-color 0.3s ease;
-  color: #2c3e50;
-  background-color: #f9fdfa;
 }
 
 form input:focus {
@@ -82,8 +78,6 @@ form button:hover {
   border: 2px solid #b2dfdb;
   border-radius: 8px;
   transition: border-color 0.3s ease;
-  color: #2c3e50;
-  background-color: #f9fdfa;
 }
 
 #busca:focus {
@@ -92,23 +86,15 @@ form button:hover {
   box-shadow: 0 0 8px rgba(0, 121, 107, 0.4);
 }
 
-/* Container da tabela para responsividade */
-.table-container {
-  width: 100%;
-  max-width: 700px;
-  overflow-x: auto; /* permite rolagem horizontal no celular */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  margin-bottom: 40px;
-  background: white;
-}
-
 table {
   width: 100%;
+  max-width: 700px;
   border-collapse: separate;
   border-spacing: 0;
+  background: white;
   border-radius: 12px;
-  min-width: 600px; /* força largura mínima */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 th, td {
@@ -116,8 +102,6 @@ th, td {
   text-align: left;
   font-size: 15px;
   color: #34495e;
-  white-space: nowrap; /* evita quebra e corte */
-  vertical-align: middle;
 }
 
 th {
@@ -139,8 +123,6 @@ input.editavel {
   border: 1.8px solid #b2dfdb;
   border-radius: 8px;
   transition: border-color 0.3s ease;
-  color: #2c3e50;
-  background-color: #f9fdfa;
 }
 
 input.editavel:focus {
@@ -164,41 +146,4 @@ button.btnDelete {
 button.btnDelete:hover {
   background: #b71c1c;
   box-shadow: 0 5px 15px rgba(183, 28, 28, 0.7);
-}
-
-/* RESPONSIVIDADE PARA CELULARES */
-@media (max-width: 480px) {
-  body {
-    margin: 10px 5px;
-  }
-
-  form {
-    padding: 15px 15px;
-    gap: 10px;
-  }
-
-  form input {
-    flex: 1 1 100%;
-    min-width: auto;
-  }
-
-  form button {
-    width: 100%;
-  }
-
-  #busca {
-    font-size: 14px;
-    padding: 10px 12px;
-  }
-
-  th, td {
-    padding: 10px 8px;
-    font-size: 13px;
-    white-space: normal; /* permite quebra de linha e evita corte */
-  }
-
-  button.btnDelete {
-    padding: 6px 10px;
-    font-size: 13px;
-  }
 }
