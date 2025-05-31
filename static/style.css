@@ -1,212 +1,167 @@
 /* Reset básico */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 30px;
-  background: linear-gradient(135deg, #e0f7fa, #ffffff);
-  color: #2c3e50;
+  background: linear-gradient(135deg, #1a0735, #3d0977);
+  color: #fff;
   min-height: 100vh;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  font-weight: 700;
-  color: #00796b;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-}
-
-/* BOTÃO DE LOGOUT */
+/* Botão de logout */
 .logout-btn {
-  background-color: #ff7043;
-  color: white;
+  background-color: #f44336;
+  color: #fff;
   border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 16px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: bold;
+  margin-bottom: 20px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  position: absolute;
-  top: 20px;
-  right: 30px;
+  transition: background-color 0.3s;
 }
 
 .logout-btn:hover {
-  background-color: #e64a19;
-  box-shadow: 0 6px 16px rgba(230, 74, 25, 0.6);
+  background-color: #d32f2f;
 }
 
-form {
-  width: 100%;
-  max-width: 700px;
-  background: white;
-  padding: 10px 20px;
-  border-radius: 12px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 35px;
-}
-
-form input {
-  flex: 1 1 150px;
-  padding: 12px 15px;
-  font-size: 16px;
-  border: 2px solid #b2dfdb;
-  border-radius: 8px;
-  transition: border-color 0.3s ease;
-}
-
-form input:focus {
-  outline: none;
-  border-color: #00796b;
-  box-shadow: 0 0 8px rgba(0, 121, 107, 0.4);
-}
-
-form button {
-  padding: 12px 25px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #00796b;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 5px 10px rgba(0, 121, 107, 0.3);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  flex-shrink: 0;
-}
-
-form button:hover {
-  background-color: #004d40;
-  box-shadow: 0 8px 15px rgba(0, 77, 64, 0.5);
-}
-
-#busca {
-  width: 100%;
-  max-width: 700px;
+/* Título */
+h1 {
+  font-size: 2.2rem;
   margin-bottom: 25px;
-  padding: 12px 15px;
-  font-size: 16px;
-  border: 2px solid #b2dfdb;
-  border-radius: 8px;
-  transition: border-color 0.3s ease;
+  text-align: center;
 }
 
-#busca:focus {
-  outline: none;
+/* Estilo dos formulários e container */
+form,
+.search-container,
+#product-table {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #333;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input:focus {
   border-color: #00796b;
-  box-shadow: 0 0 8px rgba(0, 121, 107, 0.4);
+  outline: none;
 }
 
+/* Botões de ação */
+button,
+#add-product-btn {
+  background-color: #00796b;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  font-size: 1rem;
+  border-radius: 12px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold;
+}
+
+button:hover,
+#add-product-btn:hover {
+  background-color: #00695c;
+}
+
+/* Tabela */
 table {
   width: 100%;
-  max-width: 700px;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.95rem;
 }
 
-th, td {
-  padding: 10px 14px;
+th,
+td {
+  padding: 12px;
   text-align: left;
-  font-size: 15px;
-  color: #34495e;
-  line-height: 1.2;
+  border-bottom: 1px solid #ddd;
 }
 
 th {
   background-color: #00796b;
   color: white;
-  font-weight: 600;
-  user-select: none;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
 }
 
-tbody tr:hover {
-  background-color: #e0f2f1;
-  transition: background-color 0.3s ease;
+td:last-child {
+  text-align: right;
 }
 
-input.editavel {
-  width: 100%;
-  padding: 10px 12px;
-  font-size: 15px;
-  border: 1.8px solid #b2dfdb;
-  border-radius: 8px;
-  transition: border-color 0.3s ease;
-}
-
-input.editavel:focus {
-  outline: none;
-  border-color: #00796b;
-  box-shadow: 0 0 6px rgba(0, 121, 107, 0.5);
-}
-
-button.btnDelete {
-  background: #e53935;
+/* Botão excluir */
+.delete-btn {
+  background-color: #f44336;
   color: white;
   border: none;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 3px 8px rgba(229, 57, 53, 0.5);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-weight: bold;
 }
 
-button.btnDelete:hover {
-  background: #b71c1c;
-  box-shadow: 0 5px 15px rgba(183, 28, 28, 0.7);
+.delete-btn:hover {
+  background-color: #d32f2f;
 }
 
-/* RESPONSIVIDADE MOBILE */
-@media (max-width: 768px) {
-  body {
-    margin: 10px;
+/* Responsivo */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.6rem;
   }
 
-  .logout-btn {
-    position: static;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 300px;
-    text-align: center;
-    font-size: 13px;
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  td {
     padding: 10px;
+    position: relative;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #eee;
   }
 
-  form {
-    flex-direction: column;
-    align-items: center;
-    padding: 15px 20px;
-    gap: 10px;
-  }
-
-  form input, form button, #busca {
-    font-size: 14px;
-    padding: 10px;
-    width: 100%;
-    max-width: 300px;
-    text-align: center;
-  }
-
-  th, td {
-    padding: 6px 8px;
-    font-size: 13px;
-  }
-
-  table {
-    font-size: 13px;
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
   }
 }

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -9,35 +8,44 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <a href="{{ url_for('logout') }}" style="position: absolute; top: 10px; right: 10px; background: red; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
-    Sair
-</a>
 
+    <!-- Botão de logout -->
+    <a href="{{ url_for('logout') }}" class="logout-btn">Sair</a>
+
+    <!-- Título -->
     <h1>Controle de Produtos</h1>
 
+    <!-- Formulário de cadastro -->
     <form id="formProduto">
         <input type="text" id="nome" placeholder="Nome do produto" required />
         <input type="number" id="qtdAtual" placeholder="Quantidade Atual" required />
         <input type="number" id="qtdMin" placeholder="Quantidade Mínima" required />
         <input type="number" id="qtdMax" placeholder="Quantidade Máxima" required />
-        <button type="submit">Adicionar Produto</button>
+        <button type="submit" id="add-product-btn">Adicionar Produto</button>
     </form>
 
-    <input type="text" id="busca" placeholder="Buscar produto..." />
+    <!-- Campo de busca -->
+    <div class="search-container">
+        <input type="text" id="busca" placeholder="Buscar produto..." />
+    </div>
 
-    <table border="1" id="tabelaProdutos">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Qtd Atual</th>
-                <th>Qtd Min</th>
-                <th>Qtd Max</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <!-- Tabela de produtos -->
+    <div id="product-table">
+        <table id="tabelaProdutos">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Qtd Atual</th>
+                    <th>Qtd Min</th>
+                    <th>Qtd Max</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-<script src="/static/index.js"></script>
+    <!-- JS -->
+    <script src="/static/index.js"></script>
 </body>
 </html>
