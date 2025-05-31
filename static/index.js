@@ -10,17 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 tabela.innerHTML = '';
                 data.filter(produto => produto.nome.toLowerCase().includes(filtro.toLowerCase()))
                     .forEach(produto => {
-                    const tr = document.createElement('tr');
-
-                    tr.innerHTML = `
-                        <td><input type="text" value="${produto.nome}" data-id="${produto.id}" data-campo="nome" class="editavel"></td>
-                        <td><input type="number" value="${produto.qtdAtual}" data-id="${produto.id}" data-campo="qtdAtual" class="editavel"></td>
-                        <td><input type="number" value="${produto.qtdMin}" data-id="${produto.id}" data-campo="qtdMin" class="editavel"></td>
-                        <td><input type="number" value="${produto.qtdMax}" data-id="${produto.id}" data-campo="qtdMax" class="editavel"></td>
-                        <td><button class="btnDelete" data-id="${produto.id}">Excluir</button></td>
-                    `;
-                    tabela.appendChild(tr);
-                });
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td><input type="text" value="${produto.nome}" data-id="${produto.id}" data-campo="nome" class="editavel"></td>
+                            <td><input type="number" value="${produto.qtdAtual}" data-id="${produto.id}" data-campo="qtdAtual" class="editavel"></td>
+                            <td><input type="number" value="${produto.qtdMin}" data-id="${produto.id}" data-campo="qtdMin" class="editavel"></td>
+                            <td><input type="number" value="${produto.qtdMax}" data-id="${produto.id}" data-campo="qtdMax" class="editavel"></td>
+                            <td><button class="btnDelete" data-id="${produto.id}">Excluir</button></td>
+                        `;
+                        tabela.appendChild(tr);
+                    });
 
                 document.querySelectorAll('.editavel').forEach(input => {
                     input.addEventListener('change', e => {
@@ -61,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', e => {
         e.preventDefault();
-        const nome = document.getElementById('nome').value;
+        const nome = document.getElementById('nome').value.trim();
         const qtdAtual = parseInt(document.getElementById('qtdAtual').value);
         const qtdMin = parseInt(document.getElementById('qtdMin').value);
         const qtdMax = parseInt(document.getElementById('qtdMax').value);
@@ -71,11 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ nome, qtdAtual, qtdMin, qtdMax })
         })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) throw new Error('Erro ao adicionar produto');
+            return res.json();
+        })
         .then(data => {
             form.reset();
             carregarProdutos(busca.value);
-        });
+        })
+        .catch(err => alert(err.message));
     });
 
     busca.addEventListener('input', e => {
