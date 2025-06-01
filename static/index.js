@@ -10,17 +10,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 tabela.innerHTML = '';
                 data.filter(produto => produto.nome.toLowerCase().includes(filtro.toLowerCase()))
                     .forEach(produto => {
-                    const tr = document.createElement('tr');
+                        const tr = document.createElement('tr');
 
-                    tr.innerHTML = `
-                        <td><input type="text" value="${produto.nome}" data-id="${produto.id}" data-campo="nome" class="editavel"></td>
-                        <td><input type="number" value="${produto.qtdAtual}" data-id="${produto.id}" data-campo="qtdAtual" class="editavel"></td>
-                        <td><input type="number" value="${produto.qtdMin}" data-id="${produto.id}" data-campo="qtdMin" class="editavel"></td>
-                        <td><input type="number" value="${produto.qtdMax}" data-id="${produto.id}" data-campo="qtdMax" class="editavel"></td>
-                        <td><button class="btnDelete" data-id="${produto.id}">Excluir</button></td>
-                    `;
-                    tabela.appendChild(tr);
-                });
+                        tr.innerHTML = `
+                            <td data-label="Nome">
+                                <input type="text" value="${produto.nome}" data-id="${produto.id}" data-campo="nome" class="editavel">
+                            </td>
+                            <td data-label="Quantidade Atual">
+                                <input type="number" value="${produto.qtdAtual}" data-id="${produto.id}" data-campo="qtdAtual" class="editavel">
+                            </td>
+                            <td data-label="Quantidade Mínima">
+                                <input type="number" value="${produto.qtdMin}" data-id="${produto.id}" data-campo="qtdMin" class="editavel">
+                            </td>
+                            <td data-label="Quantidade Máxima">
+                                <input type="number" value="${produto.qtdMax}" data-id="${produto.id}" data-campo="qtdMax" class="editavel">
+                            </td>
+                            <td data-label="Ações">
+                                <button class="btnDelete" data-id="${produto.id}">Excluir</button>
+                            </td>
+                        `;
+                        tabela.appendChild(tr);
+                    });
 
                 document.querySelectorAll('.editavel').forEach(input => {
                     input.addEventListener('change', e => {
@@ -37,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         })
                         .then(res => res.json())
                         .then(data => {
-                            if(data.error) alert(data.error);
+                            if (data.error) alert(data.error);
                         });
                     });
                 });
@@ -45,14 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.btnDelete').forEach(btn => {
                     btn.addEventListener('click', e => {
                         const id = e.target.dataset.id;
-                        if(confirm('Quer mesmo excluir?')) {
+                        if (confirm('Quer mesmo excluir?')) {
                             fetch('/produtos/' + id, {
                                 method: 'DELETE'
                             })
                             .then(res => res.json())
-                            .then(data => {
-                                carregarProdutos(busca.value);
-                            });
+                            .then(() => carregarProdutos(busca.value));
                         }
                     });
                 });
@@ -68,11 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch('/produtos', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome, qtdAtual, qtdMin, qtdMax })
         })
         .then(res => res.json())
-        .then(data => {
+        .then(() => {
             form.reset();
             carregarProdutos(busca.value);
         });
