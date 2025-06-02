@@ -1,4 +1,4 @@
-<!DOCTYPE html>More actions
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8" />
@@ -9,13 +9,9 @@
 </head>
 <body>
 
-    <!-- Botão de logout -->
     <a href="{{ url_for('logout') }}" class="logout-btn">Sair</a>
-
-    <!-- Título -->
     <h1>Controle de Produtos</h1>
 
-    <!-- Formulário de cadastro -->
     <form id="formProduto">
         <input type="text" id="nome" placeholder="Nome do produto" required />
         <input type="number" id="qtdAtual" placeholder="Quantidade Atual" required />
@@ -24,12 +20,10 @@
         <button type="submit" id="add-product-btn">Adicionar Produto</button>
     </form>
 
-    <!-- Campo de busca -->
     <div class="search-container">
         <input type="text" id="busca" placeholder="Buscar produto..." />
     </div>
 
-    <!-- Tabela de produtos -->
     <div id="product-table">
         <table id="tabelaProdutos">
             <thead>
@@ -45,8 +39,6 @@
         </table>
     </div>
 
-    <!-- JS -->
-    <script src="/static/index.js"></script>
     <script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
 </html>
