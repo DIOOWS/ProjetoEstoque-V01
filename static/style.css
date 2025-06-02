@@ -1,14 +1,74 @@
+@@ -1,167 +1,92 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
 body {
+  background: linear-gradient(135deg, #1a0735, #3d0977);
+  color: #fff;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Botão de logout */
+.logout-btn {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #d32f2f;
     font-family: Arial, sans-serif;
     margin: 20px;
     padding: 0;
     background-color: #f9f9f9;
 }
 
+/* Título */
 h1 {
+  font-size: 2.2rem;
+  margin-bottom: 25px;
+  text-align: center;
     text-align: center;
 }
 
+/* Estilo dos formulários e container */
+form,
+.search-container,
+#product-table {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #333;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
 form, .search-container {
     display: flex;
     justify-content: center;
@@ -17,11 +77,27 @@ form, .search-container {
     margin-bottom: 20px;
 }
 
+input:focus {
+  border-color: #00796b;
+  outline: none;
 input, button {
     padding: 10px;
     font-size: 14px;
 }
 
+/* Botões de ação */
+button,
+#add-product-btn {
+  background-color: #00796b;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  font-size: 1rem;
+  border-radius: 12px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold;
 .logout-btn {
     display: inline-block;
     margin-bottom: 20px;
@@ -32,23 +108,94 @@ input, button {
     border-radius: 5px;
 }
 
+button:hover,
+#add-product-btn:hover {
+  background-color: #00695c;
 #product-table {
     overflow-x: auto;
 }
 
+/* Tabela */
 table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.95rem;
     width: 100%;
     border-collapse: collapse;
 }
 
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 thead {
     background-color: #3498db;
     color: white;
 }
 
+th {
+  background-color: #00796b;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+}
+
+td:last-child {
+  text-align: right;
+}
+
+/* Botão excluir */
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  td {
 th, td {
     border: 1px solid #ccc;
     padding: 10px;
+    position: relative;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
     text-align: center;
 }
 
@@ -89,4 +236,3 @@ th, td {
     td[data-label="Quantidade Mínima"]::before { content: "Q-Mi"; }
     td[data-label="Quantidade Máxima"]::before { content: "Q-MA"; }
     td[data-label="Ações"]::before { content: "Ações"; }
-}
