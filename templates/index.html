@@ -1,44 +1,56 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Controle de Produtos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Produtos</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <a href="{{ url_for('logout') }}" class="logout-btn">Sair</a>
-    <h1>Controle de Produtos</h1>
-
-    <form id="formProduto">
-        <input type="text" id="nome" placeholder="Nome do produto" required />
-        <input type="number" id="qtdAtual" placeholder="Quantidade Atual" required />
-        <input type="number" id="qtdMin" placeholder="Quantidade Mínima" required />
-        <input type="number" id="qtdMax" placeholder="Quantidade Máxima" required />
-        <button type="submit" id="add-product-btn">Adicionar Produto</button>
-    </form>
-
-    <div class="search-container">
-        <input type="text" id="busca" placeholder="Buscar produto..." />
+  <header>
+    <div class="header-container">
+      <img src="https://cdn-icons-png.flaticon.com/512/263/263115.png" alt="logo" class="logo">
+      <h1>XODÓ</h1>
+    </div>
+  </header>
+  <main>
+    <h2>Controle de Produtos</h2>
+    <div class="filter-tabs">
+      <button class="tab active" onclick="filterCategory('urgente')">Urgente</button>
+      <button class="tab" onclick="filterCategory('excesso')">Excesso</button>
+      <button class="tab" onclick="filterCategory('ok')">OK</button>
+      <button class="tab" onclick="filterCategory('todos')">Todos</button>
     </div>
 
-    <div id="product-table">
-        <table id="tabelaProdutos">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Qtd Atual</th>
-                    <th>Qtd Min</th>
-                    <th>Qtd Max</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+    <div class="inputs-container">
+      <input type="text" id="nome" placeholder="Nome do produto">
+      <input type="number" id="qtdAtual" placeholder="Qtd Atual">
+      <input type="number" id="qtdMin" placeholder="Qtd Mínima">
+      <input type="number" id="qtdMax" placeholder="Qtd Máxima">
+      <button id="adicionar">Adicionar</button>
     </div>
 
-    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <table id="tabela">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Qtd Atual</th>
+          <th>Qtd Mínima</th>
+          <th>Qtd Máxima</th>
+          <th>Status</th>
+          <th>Excluir</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Linhas adicionadas dinamicamente -->
+      </tbody>
+    </table>
+
+    <div class="export-container">
+      <button id="exportarCSV">Exportar CSV</button>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
