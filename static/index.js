@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {More actions
                             </td>
                             <td data-label="Quantidade Mínima">
                                 <input type="number" value="${produto.qtdMin}" data-id="${produto.id}" data-campo="qtdMin" class="editavel">
-@@ -64,9 +70,50 @@
                         }
                     });
                 });
