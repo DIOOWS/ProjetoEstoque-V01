@@ -3,26 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Controle de Produtos</title>
+  <title>Xodó - Controle de Produtos</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <div class="header-container">
-      <img src="https://cdn-icons-png.flaticon.com/512/263/263115.png" alt="logo" class="logo">
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png" alt="Logo">
       <h1>XODÓ</h1>
     </div>
   </header>
+
   <main>
     <h2>Controle de Produtos</h2>
-    <div class="filter-tabs">
-      <button class="tab active" onclick="filterCategory('urgente')">Urgente</button>
-      <button class="tab" onclick="filterCategory('excesso')">Excesso</button>
-      <button class="tab" onclick="filterCategory('ok')">OK</button>
-      <button class="tab" onclick="filterCategory('todos')">Todos</button>
+
+    <div class="tabs">
+      <button class="tab-button active" data-category="urgente">Urgente</button>
+      <button class="tab-button" data-category="excesso">Excesso</button>
+      <button class="tab-button" data-category="ok">OK</button>
+      <button class="tab-button" data-category="todos">Todos</button>
     </div>
 
-    <div class="inputs-container">
+    <div class="search-fields">
       <input type="text" id="nome" placeholder="Nome do produto">
       <input type="number" id="qtdAtual" placeholder="Qtd Atual">
       <input type="number" id="qtdMin" placeholder="Qtd Mínima">
@@ -30,7 +32,11 @@
       <button id="adicionar">Adicionar</button>
     </div>
 
-    <table id="tabela">
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Buscar produto...">
+    </div>
+
+    <table>
       <thead>
         <tr>
           <th>Nome</th>
@@ -41,14 +47,10 @@
           <th>Excluir</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- Linhas adicionadas dinamicamente -->
-      </tbody>
+      <tbody id="tabela"></tbody>
     </table>
 
-    <div class="export-container">
-      <button id="exportarCSV">Exportar CSV</button>
-    </div>
+    <button id="exportarCSV">Exportar CSV</button>
   </main>
 
   <script src="script.js"></script>
