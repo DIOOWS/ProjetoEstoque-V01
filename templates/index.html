@@ -1,5 +1,4 @@
-
-<!DOCTYPE html>
+<!DOCTYPE html>More actions
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8" />
@@ -20,6 +19,8 @@
     <form id="formProduto">
         <input type="text" id="nome" placeholder="Nome do produto" required />
         <input type="number" id="qtdAtual" placeholder="Quantidade Atual" required />
+        <input type="number" id="qtdMin" placeholder="Quantidade Mínima" required />
+        <input type="number" id="qtdMax" placeholder="Quantidade Máxima" required />
         <button type="submit" id="add-product-btn">Adicionar Produto</button>
     </form>
 
@@ -32,6 +33,15 @@
     <div id="product-table">
         <table id="tabelaProdutos">
             <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Qtd Atual</th>
+                    <th>Qtd Min</th>
+                    <th>Qtd Max</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
         </table>
     </div>
 
