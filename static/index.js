@@ -1,183 +1,94 @@
-// Referências principais
-const tabela = document.querySelector('#tabela tbody');
-const btnAdicionar = document.getElementById('adicionar');
-const inputNome = document.getElementById('nome');
-const inputQtdAtual = document.getElementById('qtdAtual');
-const inputQtdMin = document.getElementById('qtdMin');
-const inputQtdMax = document.getElementById('qtdMax');
-const btnExportar = document.getElementById('exportarCSV');
-const tabs = document.querySelectorAll('.filter-tabs .tab');
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('formProduto');
+    const tabela = document.getElementById('tabelaProdutos').getElementsByTagName('tbody')[0];
+    const busca = document.getElementById('busca');
 
-let produtos = [];
-let filtroAtual = 'todos';
+    function carregarProdutos(filtro = '') {
+        fetch('/produtos')
+            .then(res => res.json())
+            .then(data => {
+                tabela.innerHTML = '';
+                data.filter(produto => produto.nome.toLowerCase().includes(filtro.toLowerCase()))
+                    .forEach(produto => {
+                        const tr = document.createElement('tr');
 
-// Função pra calcular status
-function calcularStatus(produto) {
-  if (produto.qtdAtual < produto.qtdMin) return 'urgente';
-  if (produto.qtdAtual > produto.qtdMax) return 'excesso';
-  return 'ok';
-}
+                        tr.innerHTML = `
+                            <td data-label="Nome">
+                                <input type="text" value="${produto.nome}" data-id="${produto.id}" data-campo="nome" class="editavel">
+                            </td>
+                            <td data-label="Quantidade Atual">
+                                <input type="number" value="${produto.qtdAtual}" data-id="${produto.id}" data-campo="qtdAtual" class="editavel">
+                            </td>
+                            <td data-label="Quantidade Mínima">
+                                <input type="number" value="${produto.qtdMin}" data-id="${produto.id}" data-campo="qtdMin" class="editavel">
+                            </td>
+                            <td data-label="Quantidade Máxima">
+                                <input type="number" value="${produto.qtdMax}" data-id="${produto.id}" data-campo="qtdMax" class="editavel">
+                            </td>
+                            <td data-label="Ações">
+                                <button class="btnDelete" data-id="${produto.id}">Excluir</button>
+                            </td>
+                        `;
+                        tabela.appendChild(tr);
+                    });
 
-// Atualiza tabela na tela de acordo com filtro
-function atualizarTabela() {
-  tabela.innerHTML = '';
+                document.querySelectorAll('.editavel').forEach(input => {
+                    input.addEventListener('change', e => {
+                        const id = e.target.dataset.id;
+                        const campo = e.target.dataset.campo;
+                        const valor = e.target.value;
 
-  const produtosFiltrados = produtos.filter(prod =>
-    filtroAtual === 'todos' || calcularStatus(prod) === filtroAtual
-  );
+                        fetch('/produtos/' + id, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ campo, valor })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.error) alert(data.error);
+                        });
+                    });
+                });
 
-  produtosFiltrados.forEach((produto, index) => {
-    const status = calcularStatus(produto);
+                document.querySelectorAll('.btnDelete').forEach(btn => {
+                    btn.addEventListener('click', e => {
+                        const id = e.target.dataset.id;
+                        if (confirm('Quer mesmo excluir?')) {
+                            fetch('/produtos/' + id, {
+                                method: 'DELETE'
+                            })
+                            .then(res => res.json())
+                            .then(() => carregarProdutos(busca.value));
+                        }
+                    });
+                });
+            });
+    }
 
-    const tr = document.createElement('tr');
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const nome = document.getElementById('nome').value;
+        const qtdAtual = parseInt(document.getElementById('qtdAtual').value);
+        const qtdMin = parseInt(document.getElementById('qtdMin').value);
+        const qtdMax = parseInt(document.getElementById('qtdMax').value);
 
-    // Nome
-    const tdNome = document.createElement('td');
-    tdNome.textContent = produto.nome;
-    tr.appendChild(tdNome);
+        fetch('/produtos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, qtdAtual, qtdMin, qtdMax })
+        })
+        .then(res => res.json())
+        .then(() => {
+            form.reset();
+            carregarProdutos(busca.value);
+        });
+    });
 
-    // Qtd Atual com botões +/-
-    const tdQtdAtual = document.createElement('td');
-    const divCounter = document.createElement('div');
-    divCounter.classList.add('counter-btns');
+    busca.addEventListener('input', e => {
+        carregarProdutos(e.target.value);
+    });
 
-    const btnMenos = document.createElement('button');
-    btnMenos.textContent = '-';
-    btnMenos.onclick = () => {
-      if (produto.qtdAtual > 0) {
-        produto.qtdAtual--;
-        atualizarTabela();
-      }
-    };
-
-    const inputQtd = document.createElement('input');
-    inputQtd.type = 'number';
-    inputQtd.value = produto.qtdAtual;
-    inputQtd.min = 0;
-    inputQtd.onchange = (e) => {
-      let val = parseInt(e.target.value);
-      if (isNaN(val) || val < 0) val = 0;
-      produto.qtdAtual = val;
-      atualizarTabela();
-    };
-
-    const btnMais = document.createElement('button');
-    btnMais.textContent = '+';
-    btnMais.onclick = () => {
-      produto.qtdAtual++;
-      atualizarTabela();
-    };
-
-    divCounter.appendChild(btnMenos);
-    divCounter.appendChild(inputQtd);
-    divCounter.appendChild(btnMais);
-    tdQtdAtual.appendChild(divCounter);
-    tr.appendChild(tdQtdAtual);
-
-    // Qtd Minima
-    const tdQtdMin = document.createElement('td');
-    tdQtdMin.textContent = produto.qtdMin;
-    tr.appendChild(tdQtdMin);
-
-    // Qtd Máxima
-    const tdQtdMax = document.createElement('td');
-    tdQtdMax.textContent = produto.qtdMax;
-    tr.appendChild(tdQtdMax);
-
-    // Status com cor
-    const tdStatus = document.createElement('td');
-    tdStatus.textContent = status.toUpperCase();
-    tdStatus.classList.add(`status-${status}`);
-    tr.appendChild(tdStatus);
-
-    // Botão Excluir
-    const tdExcluir = document.createElement('td');
-    const btnExcluir = document.createElement('button');
-    btnExcluir.classList.add('delete-btn', 'action-btn');
-    btnExcluir.innerHTML = '🗑️';
-    btnExcluir.title = 'Excluir produto';
-    btnExcluir.onclick = () => {
-      produtos.splice(index, 1);
-      atualizarTabela();
-    };
-    tdExcluir.appendChild(btnExcluir);
-    tr.appendChild(tdExcluir);
-
-    tabela.appendChild(tr);
-  });
-}
-
-// Adicionar novo produto
-btnAdicionar.addEventListener('click', () => {
-  const nome = inputNome.value.trim();
-  const qtdAtual = parseInt(inputQtdAtual.value);
-  const qtdMin = parseInt(inputQtdMin.value);
-  const qtdMax = parseInt(inputQtdMax.value);
-
-  if (!nome || isNaN(qtdAtual) || isNaN(qtdMin) || isNaN(qtdMax)) {
-    alert('Preencha todos os campos corretamente!');
-    return;
-  }
-  if (qtdMin > qtdMax) {
-    alert('Qtd Mínima não pode ser maior que Qtd Máxima!');
-    return;
-  }
-  if (qtdAtual < 0) {
-    alert('Qtd Atual não pode ser negativa!');
-    return;
-  }
-
-  produtos.push({ nome, qtdAtual, qtdMin, qtdMax });
-
-  inputNome.value = '';
-  inputQtdAtual.value = '';
-  inputQtdMin.value = '';
-  inputQtdMax.value = '';
-
-  atualizarTabela();
+    carregarProdutos();
 });
-
-// Filtros de categoria
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    filtroAtual = tab.textContent.toLowerCase() === 'todos' ? 'todos' : tab.textContent.toLowerCase();
-    atualizarTabela();
-  });
-});
-
-// Exportar CSV (somente produtos filtrados)
-btnExportar.addEventListener('click', () => {
-  const produtosFiltrados = produtos.filter(prod =>
-    filtroAtual === 'todos' || calcularStatus(prod) === filtroAtual
-  );
-  if (produtosFiltrados.length === 0) {
-    alert('Nenhum produto para exportar!');
-    return;
-  }
-
-  const header = ['Nome', 'Qtd Atual', 'Qtd Mínima', 'Qtd Máxima', 'Status'];
-  const csvRows = [
-    header.join(','),
-    ...produtosFiltrados.map(prod => {
-      const status = calcularStatus(prod);
-      return [prod.nome, prod.qtdAtual, prod.qtdMin, prod.qtdMax, status].join(',');
-    })
-  ];
-
-  const csvString = csvRows.join('\n');
-  const blob = new Blob([csvString], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'produtos.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-});
-
-// Inicializa tabela vazia
-atualizarTabela();
