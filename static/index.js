@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('formProduto');
     const tabela = document.getElementById('tabelaProdutos').getElementsByTagName('tbody')[0];
