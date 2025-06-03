@@ -3,6 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabela = document.getElementById('tabelaProdutos').querySelector('tbody');
     const buscaInput = document.getElementById('busca');
 
+    // Carrega produtos do backend
+    fetch('/produtos')
+        .then(res => res.json())
+        .then(produtos => {
+            produtos.forEach(produto => adicionarLinhaNaTabela(produto));
+        })
+        .catch(err => alert('Erro ao carregar produtos: ' + err));
+
+    // Adiciona produto no backend e na tabela
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -12,18 +21,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const qtdMax = document.getElementById('qtdMax').value.trim();
 
         if (nome && qtdAtual && qtdMin && qtdMax) {
-            adicionarProduto(nome, qtdAtual, qtdMin, qtdMax);
-            form.reset();
+            fetch('/produtos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome,
+                    qtdAtual: parseInt(qtdAtual),
+                    qtdMin: parseInt(qtdMin),
+                    qtdMax: parseInt(qtdMax)
+                })
+            })
+            .then(res => res.json())
+            .then(produto => {
+                adicionarLinhaNaTabela(produto);
+                form.reset();
+            })
+            .catch(err => alert('Erro ao adicionar produto: ' + err));
         }
     });
 
-    function adicionarProduto(nome, qtdAtual, qtdMin, qtdMax) {
+    // Função para criar e adicionar linha na tabela
+    function adicionarLinhaNaTabela(produto) {
         const tr = document.createElement('tr');
+        tr.dataset.id = produto.id;
         tr.innerHTML = `
-            <td>${nome}</td>
-            <td><span class="qtd">${qtdAtual}</span></td>
-            <td>${qtdMin}</td>
-            <td>${qtdMax}</td>
+            <td>${produto.nome}</td>
+            <td><span class="qtd">${produto.qtdAtual}</span></td>
+            <td>${produto.qtdMin}</td>
+            <td>${produto.qtdMax}</td>
             <td>
                 <button class="btnAdjust increase">+</button>
                 <button class="btnAdjust decrease">−</button>
@@ -33,11 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
         tabela.appendChild(tr);
     }
 
+    // Ações: Aumentar, Diminuir, Excluir
     tabela.addEventListener('click', function (e) {
         const alvo = e.target;
+        const linha = alvo.closest('tr');
+        const id = linha.dataset.id;
 
         if (alvo.classList.contains('increase') || alvo.classList.contains('decrease')) {
-            const linha = alvo.closest('tr');
             const qtdSpan = linha.querySelector('.qtd');
             let quantidade = parseInt(qtdSpan.textContent);
 
@@ -47,15 +76,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 quantidade -= 1;
             }
 
-            qtdSpan.textContent = quantidade;
+            fetch(`/produtos/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ campo: 'qtdAtual', valor: quantidade })
+            })
+            .then(res => {
+                if (res.ok) qtdSpan.textContent = quantidade;
+                else throw new Error('Erro ao atualizar quantidade');
+            })
+            .catch(err => alert(err.message));
         }
 
         if (alvo.classList.contains('btnDelete')) {
-            const linha = alvo.closest('tr');
-            linha.remove();
+            fetch(`/produtos/${id}`, {
+                method: 'DELETE'
+            })
+            .then(res => {
+                if (res.ok) linha.remove();
+                else throw new Error('Erro ao excluir');
+            })
+            .catch(err => alert(err.message));
         }
     });
 
+    // Busca por nome
     buscaInput.addEventListener('input', function () {
         const termo = buscaInput.value.toLowerCase();
         const linhas = tabela.querySelectorAll('tr');
