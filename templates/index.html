@@ -1,36 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Controle de Estoque</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Produtos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Estoque de Produtos</h1>
+
+    <a href="{{ url_for('logout') }}" class="logout-btn">Sair</a>
+    <h1>Controle de Produtos</h1>
 
     <form id="formProduto">
-        <input type="text" id="nome" placeholder="Nome do Produto" required>
-        <input type="number" id="qtdAtual" placeholder="Qtd Atual" required>
-        <input type="number" id="qtdMin" placeholder="Qtd Mínima" required>
-        <input type="number" id="qtdMax" placeholder="Qtd Máxima" required>
-        <button type="submit">Cadastrar</button>
+        <input type="text" id="nome" placeholder="Nome do produto" required />
+        <input type="number" id="qtdAtual" placeholder="Quantidade Atual" required />
+        <input type="number" id="qtdMin" placeholder="Quantidade Mínima" required />
+        <input type="number" id="qtdMax" placeholder="Quantidade Máxima" required />
+        <button type="submit" id="add-product-btn">Adicionar Produto</button>
     </form>
 
-    <input type="text" id="busca" placeholder="Buscar produto...">
+    <div class="search-container">
+        <input type="text" id="busca" placeholder="Buscar produto..." />
+    </div>
 
-    <table id="tabelaProdutos">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Qtd Atual</th>
-                <th>Qtd Mínima</th>
-                <th>Qtd Máxima</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div id="product-table">
+        <table id="tabelaProdutos">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Qtd Atual</th>
+                    <th>Qtd Min</th>
+                    <th>Qtd Max</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
 </html>

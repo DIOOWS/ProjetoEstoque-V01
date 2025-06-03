@@ -11,12 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.filter(produto => produto.nome.toLowerCase().includes(filtro.toLowerCase()))
                     .forEach(produto => {
                         const tr = document.createElement('tr');
+
                         tr.innerHTML = `
-                            <td><input type="text" value="${produto.nome}" data-id="${produto.id}" data-campo="nome" class="editavel"></td>
-                            <td><input type="number" value="${produto.qtdAtual}" data-id="${produto.id}" data-campo="qtdAtual" class="editavel"></td>
-                            <td><input type="number" value="${produto.qtdMin}" data-id="${produto.id}" data-campo="qtdMin" class="editavel"></td>
-                            <td><input type="number" value="${produto.qtdMax}" data-id="${produto.id}" data-campo="qtdMax" class="editavel"></td>
-                            <td><button class="btnDelete" data-id="${produto.id}">Excluir</button></td>
+                            <td data-label="Nome">
+                                <input type="text" value="${produto.nome}" data-id="${produto.id}" data-campo="nome" class="editavel">
+                            </td>
+                            <td data-label="Quantidade Atual">
+                                <input type="number" value="${produto.qtdAtual}" data-id="${produto.id}" data-campo="qtdAtual" class="editavel">
+                            </td>
+                            <td data-label="Quantidade Mínima">
+                                <input type="number" value="${produto.qtdMin}" data-id="${produto.id}" data-campo="qtdMin" class="editavel">
+                            </td>
+                            <td data-label="Quantidade Máxima">
+                                <input type="number" value="${produto.qtdMax}" data-id="${produto.id}" data-campo="qtdMax" class="editavel">
+                            </td>
+                            <td data-label="Ações">
+                                <button class="btnDelete" data-id="${produto.id}">Excluir</button>
+                            </td>
                         `;
                         tabela.appendChild(tr);
                     });
@@ -49,9 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 method: 'DELETE'
                             })
                             .then(res => res.json())
-                            .then(data => {
-                                carregarProdutos(busca.value);
-                            });
+                            .then(() => carregarProdutos(busca.value));
                         }
                     });
                 });
@@ -71,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify({ nome, qtdAtual, qtdMin, qtdMax })
         })
         .then(res => res.json())
-        .then(data => {
+        .then(() => {
             form.reset();
             carregarProdutos(busca.value);
         });

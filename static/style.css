@@ -1,69 +1,93 @@
+
 body {
     font-family: Arial, sans-serif;
-    margin: 30px;
+    margin: 20px;
+    padding: 0;
     background-color: #f9f9f9;
 }
 
 h1 {
-    color: #333;
+    text-align: center;
+}
+
+form, .search-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
     margin-bottom: 20px;
 }
 
-form {
+input, button {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.logout-btn {
+    display: inline-block;
     margin-bottom: 20px;
-}
-
-input[type="text"], input[type="number"] {
-    padding: 8px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    padding: 8px 12px;
-    background-color: #28a745;
+    padding: 10px 20px;
+    background-color: #e74c3c;
     color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    text-decoration: none;
+    border-radius: 5px;
 }
 
-button:hover {
-    background-color: #218838;
-}
-
-#busca {
-    margin-bottom: 15px;
-    padding: 8px;
-    width: 300px;
+#product-table {
+    overflow-x: auto;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background: white;
+}
+
+thead {
+    background-color: #3498db;
+    color: white;
 }
 
 th, td {
-    border: 1px solid #ddd;
-    padding: 12px;
+    border: 1px solid #ccc;
+    padding: 10px;
     text-align: center;
 }
 
-th {
-    background-color: #007bff;
-    color: white;
-}
+/* Responsividade com data-label */
+@media (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
 
-.btnDelete {
-    background-color: #dc3545;
-    padding: 6px 10px;
-    color: white;
-    border: none;
-    border-radius: 4px;
-}
+    thead {
+        display: none;
+    }
 
-.btnDelete:hover {
-    background-color: #c82333;
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        background: #fff;
+    }
+
+    td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+    }
+
+    td::before {
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    td[data-label="Nome"]::before { content: "Nome"; }
+    td[data-label="Quantidade Atual"]::before { content: "Q-A"; }
+    td[data-label="Quantidade Mínima"]::before { content: "Q-Mi"; }
+    td[data-label="Quantidade Máxima"]::before { content: "Q-MA"; }
+    td[data-label="Ações"]::before { content: "Ações"; }
 }
