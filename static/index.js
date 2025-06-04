@@ -50,7 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <td contenteditable="true" class="editable" data-campo="nome">${produto.nome}</td>
         <td>
             <button class="btnAdjust decrease">−</button>
-            <span class="qtd editable" contenteditable="true" data-campo="qtdAtual">${produto.qtdAtual}</span>
+            <td>
+              <div class="qtdContainer">
+                <button class="btnAdjust decrease">−</button>
+                <span class="qtd">${qtdAtual}</span>
+                <button class="btnAdjust increase">+</button>
+              </div>
+            </td>
             <button class="btnAdjust increase">+</button>
         </td>
         <td contenteditable="true" class="editable" data-campo="qtdMin">${produto.qtdMin}</td>
