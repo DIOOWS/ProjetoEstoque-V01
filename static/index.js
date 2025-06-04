@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td contenteditable="true" class="editable" data-campo="qtdMin">${produto.qtdMin}</td>
         <td contenteditable="true" class="editable" data-campo="qtdMax">${produto.qtdMax}</td>
         <td>
-            <button class="btnDelete">🗑️</button>
+            <button class="btnDelete">Excluir</button>
         </td>
     `;
     tabela.appendChild(tr);
