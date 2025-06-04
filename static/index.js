@@ -44,30 +44,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para criar e adicionar linha na tabela
     function adicionarLinhaNaTabela(produto) {
-    const tr = document.createElement('tr');
-    tr.dataset.id = produto.id;
-    tr.innerHTML = `
-        <td contenteditable="true" class="editable" data-campo="nome">${produto.nome}</td>
-        <td>
-            <button class="btnAdjust decrease">−</button>
+        const tr = document.createElement('tr');
+        tr.dataset.id = produto.id;
+        tr.innerHTML = `
+            <td contenteditable="true" class="editable" data-campo="nome">${produto.nome}</td>
             <td>
-              <div class="qtdContainer">
-                <button class="btnAdjust decrease">−</button>
-                <span class="qtd">${qtdAtual}</span>
-                <button class="btnAdjust increase">+</button>
-              </div>
+                <div class="qtdContainer">
+                    <button class="btnAdjust decrease">−</button>
+                    <span class="qtd">${produto.qtdAtual}</span>
+                    <button class="btnAdjust increase">+</button>
+                </div>
             </td>
-            <button class="btnAdjust increase">+</button>
-        </td>
-        <td contenteditable="true" class="editable" data-campo="qtdMin">${produto.qtdMin}</td>
-        <td contenteditable="true" class="editable" data-campo="qtdMax">${produto.qtdMax}</td>
-        <td>
-            <button class="btnDelete">Excluir</button>
-        </td>
-    `;
-    tabela.appendChild(tr);
-}
-
+            <td contenteditable="true" class="editable" data-campo="qtdMin">${produto.qtdMin}</td>
+            <td contenteditable="true" class="editable" data-campo="qtdMax">${produto.qtdMax}</td>
+            <td>
+                <button class="btnDelete">Excluir</button>
+            </td>
+        `;
+        tabela.appendChild(tr);
+    }
 
     // Ações: Aumentar, Diminuir, Excluir
     tabela.addEventListener('click', function (e) {
@@ -112,29 +107,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Atualiza valor ao sair do campo editável
-tabela.addEventListener('blur', function (e) {
-    const alvo = e.target;
+    tabela.addEventListener('blur', function (e) {
+        const alvo = e.target;
 
-    if (alvo.classList.contains('editable')) {
-        const linha = alvo.closest('tr');
-        const id = linha.dataset.id;
-        const campo = alvo.dataset.campo;
-        const novoValor = campo === 'nome' ? alvo.textContent.trim() : parseInt(alvo.textContent);
+        if (alvo.classList.contains('editable')) {
+            const linha = alvo.closest('tr');
+            const id = linha.dataset.id;
+            const campo = alvo.dataset.campo;
+            const texto = alvo.textContent.trim();
+            const novoValor = campo === 'nome' ? texto : parseInt(texto);
 
-        fetch(`/produtos/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ campo, valor: novoValor })
-        })
-        .then(res => {
-            if (!res.ok) throw new Error('Erro ao atualizar campo');
-        })
-        .catch(err => alert(err.message));
-    }
-}, true);  // Use captura para garantir que o evento pegue antes do input perder foco
+            if (campo !== 'nome' && isNaN(novoValor)) {
+                alert('Valor inválido');
+                return;
+            }
 
+            fetch(`/produtos/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ campo, valor: novoValor })
+            })
+            .then(res => {
+                if (!res.ok) throw new Error('Erro ao atualizar campo');
+            })
+            .catch(err => alert(err.message));
+        }
+    }, true);  // Usa modo de captura
 
     // Busca por nome
     buscaInput.addEventListener('input', function () {
