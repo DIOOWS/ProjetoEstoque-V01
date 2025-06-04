@@ -146,6 +146,20 @@ td input {
     transition: background 0.3s;
 }
 
+td[contenteditable="true"] {
+    background-color: #fff5cc;   /* Deixa fundo amarelinho pra destacar que é editável */
+    border: 1px solid #ccc;      /* Uma bordinha pra parecer um campo */
+    padding: 4px;                /* Espaçamento interno */
+}
+
+.btnAdjust {
+    margin: 0 5px;               /* Espaço entre os botões e o número */
+    padding: 2px 6px;            /* Tamanho do botão */
+    font-weight: bold;          /* Deixa o símbolo + e - mais visível */
+    cursor: pointer;            /* Mostra a mãozinha ao passar o mouse */
+}
+
+
 .btnDelete:hover {
     background: #c9302c;
 }
