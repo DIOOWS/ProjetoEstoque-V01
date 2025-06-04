@@ -151,7 +151,7 @@ td[contenteditable="true"] {
 }
 
 .btnAdjust {
-    margin: 0 5px;               /* Espaço entre os botões e o número */
+    margin: 0 10px;               /* Espaço entre os botões e o número */
     padding: 2px 6px;            /* Tamanho do botão */
     font-weight: bold;          /* Deixa o símbolo + e - mais visível */
     cursor: pointer;            /* Mostra a mãozinha ao passar o mouse */
